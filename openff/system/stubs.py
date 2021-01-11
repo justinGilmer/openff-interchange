@@ -27,13 +27,12 @@ from openff.system.components.smirnoff import (
 )
 from openff.system.components.system import System
 from openff.system.exceptions import SMIRNOFFHandlerNotImplementedError
-from openff.system.types import UnitArray
 
 
 def to_openff_system(
     self,
     topology: Topology,
-    box: Optional[Union[omm_unit.Quantity, UnitArray]] = None,
+    box: Optional[Union[omm_unit.Quantity]] = None,
     **kwargs,
 ) -> System:
     """
@@ -141,8 +140,7 @@ def create_improper_torsion_potential_handler(
     """
     handler = SMIRNOFFImproperTorsionHandler()
     handler.store_matches(parameter_handler=self, topology=topology)
-    if len(handler.slot_map) > 0:
-        handler.store_potentials(parameter_handler=self)
+    handler.store_potentials(parameter_handler=self)
 
     return handler
 
